@@ -19,7 +19,6 @@ public class Torres {
     }
     public static void move(int n,int origin, int destination){
         System.out.println("move disc "+n+" from " +origin+" to "+ destination);
-        
         return;
     }
 }
