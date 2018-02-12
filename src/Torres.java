@@ -10,6 +10,7 @@ public class Torres {
     public static void hanoi(int n, int origin, int aux ,int destination){
         if(n==1){
             move(n,origin,destination);
+            return;
         }
         else {
             hanoi(n - 1, origin, destination, aux);
@@ -19,7 +20,7 @@ public class Torres {
     }
     public static void move(int n,int origin, int destination){
         System.out.println("move disc "+n+" from " +origin+" to "+ destination);
-        
+
         return;
     }
 }
