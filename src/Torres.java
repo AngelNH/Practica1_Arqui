@@ -4,7 +4,7 @@ public class Torres {
 
     public static void main(String [] args){
         //here the code for translate in asm.
-        hanoi(3,1,2,3);
+        hanoi(8,1,2,3);
     }
 
     public static void hanoi(int n, int origin, int aux ,int destination){
