@@ -28,7 +28,9 @@ loop1:	sw $s0, ($t0)
 	
 hanoi: # a0 -> n | a1 -> origin | a2 -> aux | a3 -> destination
 	#push into stack
-	#ra,t0,t1,t2
+	#ra
+	#t0,t1,t2,
+	#a0,a1,a2
 	
 	addi $sp, $sp, -28
 	#addi $sp, $sp, -16
@@ -61,12 +63,12 @@ hanoi: # a0 -> n | a1 -> origin | a2 -> aux | a3 -> destination
 	add $a2,$t1,$zero
 	add $a3,$t2,$zero
 	jal hanoi #a0 ->n | a1 -> aux | a2 -> origin | a3 -> destination
+	
 	#pop stack
 	lw $ra, 0($sp)
 	lw $t0, 4($sp)
 	lw $t1, 8($sp)
 	lw $t2, 12($sp)
-	
 	lw $a0, 16($sp)
 	lw $a1, 20($sp)
 	lw $a2, 24($sp)
@@ -82,7 +84,6 @@ base:
 	lw $t0, 4($sp)
 	lw $t1, 8($sp)
 	lw $t2, 12($sp)
-	lw $a0, 16($sp)
 	lw $a0, 16($sp)
 	lw $a1, 20($sp)
 	lw $a2, 24($sp)
