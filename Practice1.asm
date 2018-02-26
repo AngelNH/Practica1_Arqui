@@ -1,6 +1,6 @@
 .data
 tower1: .word
-disc:   .word 3
+disc:   .word 8
 .text
 # s1 towers.
 #if we add 32 in decimal we move to the other tower
@@ -64,25 +64,15 @@ hanoi: # a0 -> n | a1 -> origin | a2 -> aux | a3 -> destination
 	add $a2,$t1,$zero
 	add $a3,$t2,$zero
 	jal hanoi #a0 ->n | a1 -> aux | a2 -> origin | a3 -> destination
+	j pop
 	
-	#pop stack
-	lw $ra, 0($sp)
-	lw $t0, 4($sp)
-	lw $t1, 8($sp)
-	lw $t2, 12($sp)
-	lw $a0, 16($sp)
-	lw $a1, 20($sp)
-	lw $a2, 24($sp)
-	lw $a3, 28($sp)
-	#addi $sp, $sp, 28
-	addi $sp,$sp,32
-	jr $ra  
 base: 	
 	#add $t1,$a2,$zero
 	add $a2,$a3,$zero
 	#add $a3,$t1,$zero
 	jal moveDisc 	#a0 -> n, a1-> origin, a2-> destination
 	#pop stack
+pop:	
 	lw $ra, 0($sp)
 	lw $t0, 4($sp)
 	lw $t1, 8($sp)
