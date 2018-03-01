@@ -5,6 +5,11 @@ disc:   .word 8
 # s1 towers.
 #if we add 32 in decimal we move to the other tower
 main:
+	#the towers
+	addi $t4,$zero,1
+	addi $t5,$zero,2
+	addi $t6,$zero,3
+	
 	la $s1, tower1
 	jal fill
 	la $s0, disc
@@ -46,6 +51,7 @@ hanoi: # a0 -> n | a1 -> origin | a2 -> aux | a3 -> destination
 	
 	slti $t0,$a0,2 		#to check id the number of discs is 1
 	bne $t0,$zero,base
+	
 	#we apply the recursivity
 	add $t1,$a2,$zero
 	add $a2,$a3,$zero
@@ -53,9 +59,6 @@ hanoi: # a0 -> n | a1 -> origin | a2 -> aux | a3 -> destination
 	addi $a0,$a0,-1
 	jal hanoi		#a0 ->n | a1 -> origin | a2 -> destination | a3 -> aux
 	addi $a0,$a0,+1
-	#add $t1,$a2,$zero
-	#add $a2,$a3,$zero
-	#add $a3,$t1,$zero
 	jal moveDisc 		# a0-> n , a1 -> origin, a2 -> destination
 	addi $a0,$a0,-1
 	add $t1,$a1,$zero
@@ -67,9 +70,7 @@ hanoi: # a0 -> n | a1 -> origin | a2 -> aux | a3 -> destination
 	j pop
 	
 base: 	
-	#add $t1,$a2,$zero
 	add $a2,$a3,$zero
-	#add $a3,$t1,$zero
 	jal moveDisc 	#a0 -> n, a1-> origin, a2-> destination
 	#pop stack
 pop:	
@@ -85,7 +86,10 @@ pop:
 	addi $sp, $sp, 32
 	jr $ra
 	
-
+	#---------------------------------------------
+	#------ Got to do this again------------------
+	#---------------------------------------------
+	
 moveDisc:# a0-> n , a1 -> origin, a2 -> destination
 	#push stack
 	# ra,t0,s1,t1
@@ -138,6 +142,28 @@ loop5:  addi $t0,$t0,+4
 	lw $a2, 24($sp)
 	addi $sp, $sp, 28
 	jr $ra
+	
+moveDisc1:
+	# We start by the saved count of discs, on each tower
+	# tower 1 : s3
+	# tower 2 : s4 
+	# tower 3 : s5
+	
+	#inputs 
+	#a0 -> n (disc number we move) 
+	#a1 -> origin 
+	#a2 -> destination
+	
+	#first check from wich tower we get 
+	#the disc
+	bne $a1,$t1,tower2	#if (origin == tower 1)
+	srl $s1,$
+tower2: bne $a1,$t2,tower3	#else if (origin == tower 2)
+
+tower3: #we do not compare. 	#else -> origin == tower 3
+	
+	
+	
 	
 exit:
 	
