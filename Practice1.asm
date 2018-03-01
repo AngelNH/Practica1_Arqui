@@ -1,6 +1,6 @@
 .data
 tower1: .word
-disc:   .word 3
+disc:   .word 8
 .text
 # s1 towers.
 #if we add 32 in decimal we move to the other tower
@@ -14,6 +14,9 @@ main:
 	jal fill
 	
 	la $s0, disc
+	addi $s6,$s0,32
+	addi $s7,$s0,64
+	
 	lw $a0,($s0)
 	add $s3,$zero,$a0
 	addi $a1,$zero,1
@@ -161,30 +164,74 @@ moveDisc1:
 	
 	#push 
 	#a1 , s1 , s0
+	addi $sp, $sp, -16
+	sw $ra, 0($sp)
+	sw $a1, 4($sp)
+	sw $s1, 8($sp)
+	sw $s0, 12($sp)
+	#finish push 
 	la $s0 , tower1
-	
-	
+	#take the disc from origin
 	bne $a1,$t4,tower2	#if (origin == tower 1)
 	addi $s3,$s3,-1		#check this line
 	sll $s1,$s3,2		#s1 direction 
 	add $s1,$s0,$s1
 	lw $s2, 0($s1)		#s2 we got the disc to move		<--- maybe we can erase these line.
 	sw $zero, 0($s1)	#erase the disc from origin
+	j exitcase
 	
 tower2: bne $a1,$t5,tower3	#else if (origin == tower 2)
 	addi $s4,$s4,-1		#check this line
 	sll $s1,$s4,2		#s1 direction 
 	add $s1,$s0,$s1
+	addi $s1,$s1,32
 	lw $s2, 0($s1)		#s2 we got the disc to move		<--- maybe we can erase these line.
 	sw $zero, 0($s1)	#erase the disc from origin
+	j exitcase
 
 tower3: #we do not compare. 	#else -> origin == tower 3
 	addi $s5,$s5,-1		#check this line
 	sll $s1,$s5,2		#s1 direction 
 	add $s1,$s0,$s1
+	addi $s1,$s1,64
 	lw $s2, 0($s1)		#s2 we got the disc to move		<--- maybe we can erase these line.
 	sw $zero, 0($s1)	#erase the disc from origin
+exitcase:
+	#-------------------------------------------------
+	#now put the disc into destination
 	
+	bne $a2,$t4,to2		#if (destination == tower 1)
+	sll $s1,$s3,2		#s1 direction we multiply discs by 4
+	add $s1,$s0,$s1
+	sw $s2, 0($s1)		#s2 move to the destionation tower	
+	addi $s3,$s3,1	
+	j exitmove
+	
+to2:	bne $a2,$t5,to3		#if (destination == tower 2)
+	sll $s1,$s4,2		#s1 direction we multiply discs by 4
+	add $s1,$s0,$s1
+	addi $s1,$s1,32
+	sw $s2, 0($s1)		#s2 move to the destionation tower	
+	addi $s4,$s4,1
+	j exitmove
+	
+to3:	#we do not compare	#else -> detination == tower 3
+	sll $s1,$s5,2		#s1 direction we multiply discs by 4
+	add $s1,$s0,$s1
+	addi $s1,$s1,64
+	sw $s2, 0($s1)		#s2 move to the destionation tower	
+	addi $s5,$s5,1
+
+exitmove:
+	#pop
+	#a1 , s1 , s0
+	lw $ra, 0($sp)
+	lw $a1, 4($sp)
+	lw $s1, 8($sp)
+	lw $s0, 12($sp)
+	addi $sp, $sp, 16
+	#finish push 
+	jr $ra
 	
 	
 	
