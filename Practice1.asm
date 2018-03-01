@@ -24,7 +24,6 @@ main:
 	jal hanoi
 	j exit
 	
-
 # fill the tower with the number of discs.
 fill:
 	add $t0,$zero,$s1
@@ -35,11 +34,7 @@ loop1:	sw $a0, ($t0)
 	jr $ra
 	
 hanoi: # a0 -> n | a1 -> origin | a2 -> aux | a3 -> destination
-	#push into stack
-	#ra
-	#t0,t1,t2,
-	#a0,a1,a2
-#CALIS	
+	#push into stack	
 	addi $sp, $sp, -20
 	sw $ra, 0($sp)
 	sw $a0, 4($sp)
@@ -50,27 +45,27 @@ hanoi: # a0 -> n | a1 -> origin | a2 -> aux | a3 -> destination
 	slti $t0,$a0,2 		#to check id the number of discs is 1
 	bne $t0,$zero,base
 	
-	#we apply the recursivity
+	#apply recursivity
 	add $t1,$a2,$zero
 	add $a2,$a3,$zero
 	add $a3,$t1,$zero
 	addi $a0,$a0,-1
 	jal hanoi		#a0 ->n | a1 -> origin | a2 -> destination | a3 -> aux
-	addi $a0,$a0,+1
+	addi $a0,$a0,1
 	jal moveDisc1 		# a0-> n , a1 -> origin, a2 -> destination
 	addi $a0,$a0,-1
 	add $t1,$a1,$zero
 	add $a1,$a3,$zero
-	add $t2,$a2,$zero
+	add $a3,$a2,$zero
 	add $a2,$t1,$zero
-	add $a3,$t2,$zero
 	jal hanoi #a0 ->n | a1 -> aux | a2 -> origin | a3 -> destination
 	j pop
 	
 base: 	
 	add $a2,$a3,$zero
 	jal moveDisc1 	#a0 -> n, a1-> origin, a2-> destination
-	#pop stack
+
+#pop stack
 pop:	
 	lw $ra, 0($sp)
 	lw $a0, 4($sp)
@@ -78,8 +73,7 @@ pop:
 	lw $a2, 12($sp)
 	lw $a3, 16($sp)
 	addi $sp, $sp, 20
-	jr $ra
-
+	jr $ra	
 	
 moveDisc1:
 	# We start by the saved count of discs, on each tower
@@ -94,15 +88,7 @@ moveDisc1:
 	
 	#first check from wich tower we get 
 	#the disc
-	
-	#push 
-	#a1 , s1 , s0
-	addi $sp, $sp, -16
-	sw $ra, 0($sp)
-	sw $a1, 4($sp)
-	sw $s1, 8($sp)
-	sw $s0, 12($sp)
-	#finish push 
+
 	ori $s0, 0x10010000
 	#take the disc from origin
 	bne $a1,$t4,tower2	#if (origin == tower 1)
@@ -155,19 +141,7 @@ to3:	#we do not compare	#else -> detination == tower 3
 	sw $s2, 0($s1)		#s2 move to the destionation tower	
 	addi $s5,$s5,1
 
-exitmove:
-	#pop
-	#a1 , s1 , s0
-	lw $ra, 0($sp)
-	lw $a1, 4($sp)
-	lw $s1, 8($sp)
-	lw $s0, 12($sp)
-	addi $sp, $sp, 16
-	#finish push 
+exitmove: 
 	jr $ra
 	
-	
-	
 exit:
-	
-	
