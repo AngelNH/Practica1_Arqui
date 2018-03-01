@@ -1,6 +1,6 @@
 .data
 tower1: .word
-disc:   .word 8
+disc:   .word 3
 .text
 # s1 towers.
 #if we add 32 in decimal we move to the other tower
@@ -12,8 +12,10 @@ main:
 	
 	la $s1, tower1
 	jal fill
+	
 	la $s0, disc
 	lw $a0,($s0)
+	add $s3,$zero,$a0
 	addi $a1,$zero,1
 	addi $a2,$zero,2
 	addi $a3,$zero,3
@@ -59,7 +61,7 @@ hanoi: # a0 -> n | a1 -> origin | a2 -> aux | a3 -> destination
 	addi $a0,$a0,-1
 	jal hanoi		#a0 ->n | a1 -> origin | a2 -> destination | a3 -> aux
 	addi $a0,$a0,+1
-	jal moveDisc 		# a0-> n , a1 -> origin, a2 -> destination
+	jal moveDisc1 		# a0-> n , a1 -> origin, a2 -> destination
 	addi $a0,$a0,-1
 	add $t1,$a1,$zero
 	add $a1,$a3,$zero
@@ -71,7 +73,7 @@ hanoi: # a0 -> n | a1 -> origin | a2 -> aux | a3 -> destination
 	
 base: 	
 	add $a2,$a3,$zero
-	jal moveDisc 	#a0 -> n, a1-> origin, a2-> destination
+	jal moveDisc1 	#a0 -> n, a1-> origin, a2-> destination
 	#pop stack
 pop:	
 	lw $ra, 0($sp)
@@ -156,11 +158,32 @@ moveDisc1:
 	
 	#first check from wich tower we get 
 	#the disc
-	bne $a1,$t1,tower2	#if (origin == tower 1)
-	srl $s1,$
-tower2: bne $a1,$t2,tower3	#else if (origin == tower 2)
+	
+	#push 
+	#a1 , s1 , s0
+	la $s0 , tower1
+	
+	
+	bne $a1,$t4,tower2	#if (origin == tower 1)
+	addi $s3,$s3,-1		#check this line
+	sll $s1,$s3,2		#s1 direction 
+	add $s1,$s0,$s1
+	lw $s2, 0($s1)		#s2 we got the disc to move		<--- maybe we can erase these line.
+	sw $zero, 0($s1)	#erase the disc from origin
+	
+tower2: bne $a1,$t5,tower3	#else if (origin == tower 2)
+	addi $s4,$s4,-1		#check this line
+	sll $s1,$s4,2		#s1 direction 
+	add $s1,$s0,$s1
+	lw $s2, 0($s1)		#s2 we got the disc to move		<--- maybe we can erase these line.
+	sw $zero, 0($s1)	#erase the disc from origin
 
 tower3: #we do not compare. 	#else -> origin == tower 3
+	addi $s5,$s5,-1		#check this line
+	sll $s1,$s5,2		#s1 direction 
+	add $s1,$s0,$s1
+	lw $s2, 0($s1)		#s2 we got the disc to move		<--- maybe we can erase these line.
+	sw $zero, 0($s1)	#erase the disc from origin
 	
 	
 	
