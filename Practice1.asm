@@ -1,13 +1,17 @@
+#Yara Fernanda Angel Brambila
+#Miguel Angel Nuño Hernandez
+
+#Práctica 1: Torres de Hanoi
+
 .data
 tower1: .word
 disc: 8
 .text
-#if we add 32 in decimal we move to the other tower
+
 main:
 	#the towers
 	addi $t4,$zero,1
 	addi $t5,$zero,2
-	
 	ori $s0, 0x10010000
 	lw $a0,($s0)
 	
@@ -36,7 +40,6 @@ hanoi: # a0 -> n | a1 -> origin | a2 -> aux | a3 -> destination
 	sw $a3, 16($sp)
 	 
 	beq $a0,1,base	#to check if the number of discs is 1
-	#apply recursivity
 	add $t1,$a2,$zero
 	add $a2,$a3,$zero
 	add $a3,$t1,$zero
@@ -54,8 +57,7 @@ base:
 	add $a2,$a3,$zero
 	jal moveDisc1 	#a0 -> n, a1-> origin, a2-> destination
 
-#pop stack
-pop:	
+pop:	#pop stack
 	lw $ra, 0($sp)
 	lw $a0, 4($sp)
 	lw $a1, 8($sp)
@@ -74,7 +76,6 @@ moveDisc1:
 	#a2 -> destination
 	
 	#first check from wich tower we get the disc
-	#take the disc from origin
 	bne $a1,$t4,tower2	#if (origin == tower 1)
 	addi $s3,$s3,-1		#check this line
 	sll $s1,$s3,2		#s1 direction 
@@ -93,6 +94,7 @@ tower3: #we do not compare. 	#else -> origin == tower 3
 	sll $s1,$s5,2		#s1 direction 
 	add $s1,$s0,$s1
 	addi $s1,$s1,64
+	
 exitcase:
 	lw $s2, 0($s1)		#s2 we got the disc to move
 	sw $zero, 0($s1)	#erase the disc from origin
