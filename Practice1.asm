@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 
 #Yara Fernanda Angel Brambila
@@ -12,6 +13,20 @@
 
 
 
+=======
+<<<<<<< HEAD
+#Yara Fernanda Angel Brambila
+#Miguel Angel Nuño Hernandez
+
+#Práctica 1: Torres de Hanoi
+
+.data
+tower1: .word
+disc: 8
+.text
+
+=======
+>>>>>>> d367ba9c9cd37640d1689d05752be23e041da128
 .data
 
 tower1: .word
@@ -23,9 +38,13 @@ disc:   .word 8
 # s1 towers.
 
 #if we add 32 in decimal we move to the other tower
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> 745bddbcaf5cb7d268268568ede62eedb4beaa7c
+>>>>>>> d367ba9c9cd37640d1689d05752be23e041da128
 main:
 
 	#the towers
@@ -33,6 +52,7 @@ main:
 	addi $t4,$zero,1
 
 	addi $t5,$zero,2
+<<<<<<< HEAD
 
 
 
@@ -55,6 +75,19 @@ loop1:	sw $a0, ($t0)
 	bne $a0,$zero,loop1	
 
 
+=======
+<<<<<<< HEAD
+	ori $s0, 0x10010000
+	lw $a0,($s0)
+	
+fill:	# fill the tower
+	add $t0,$zero,$s0
+loop1:	sw $a0, ($t0)
+	addi $t0,$t0,4
+	addi $a0,$a0,-1
+	bne $a0,$zero,loop1	
+=======
+>>>>>>> d367ba9c9cd37640d1689d05752be23e041da128
 	addi $t6,$zero,3
 
 	
@@ -70,7 +103,11 @@ loop1:	sw $a0, ($t0)
 	addi $s6,$s0,32
 
 	addi $s7,$s0,64
+<<<<<<< HEAD
 
+=======
+>>>>>>> 745bddbcaf5cb7d268268568ede62eedb4beaa7c
+>>>>>>> d367ba9c9cd37640d1689d05752be23e041da128
 	
 
 	lw $a0,($s0)
@@ -88,6 +125,18 @@ loop1:	sw $a0, ($t0)
 	j exit
 
 	
+<<<<<<< HEAD
+hanoi: # a0 -> n | a1 -> origin | a2 -> aux | a3 -> destination
+	#push into stack	
+	addi $sp, $sp, -20
+	sw $ra, 0($sp)
+	sw $a0, 4($sp)
+	sw $a1, 8($sp)
+	sw $a2, 12($sp)
+	sw $a3, 16($sp)
+	 
+	beq $a0,1,base	#to check if the number of discs is 1
+=======
 
 hanoi: # a0 -> n | a1 -> origin | a2 -> aux | a3 -> destination
 
@@ -157,7 +206,11 @@ hanoi: # a0 -> n | a1 -> origin | a2 -> aux | a3 -> destination
 	
 
 	#we apply the recursivity
+<<<<<<< HEAD
 
+=======
+>>>>>>> 745bddbcaf5cb7d268268568ede62eedb4beaa7c
+>>>>>>> d367ba9c9cd37640d1689d05752be23e041da128
 	add $t1,$a2,$zero
 
 	add $a2,$a3,$zero
@@ -167,6 +220,7 @@ hanoi: # a0 -> n | a1 -> origin | a2 -> aux | a3 -> destination
 	addi $a0,$a0,-1
 
 	jal hanoi		#a0 ->n | a1 -> origin | a2 -> destination | a3 -> aux
+<<<<<<< HEAD
 
 
 	jal moveDisc1 		# a0-> n , a1 -> origin, a2 -> destination
@@ -180,6 +234,15 @@ hanoi: # a0 -> n | a1 -> origin | a2 -> aux | a3 -> destination
 	add $a2,$t1,$zero
 
 
+=======
+<<<<<<< HEAD
+	jal moveDisc1 		# a0-> n , a1 -> origin, a2 -> destination
+	add $t1,$a1,$zero
+	add $a1,$a3,$zero
+	add $a3,$a2,$zero
+	add $a2,$t1,$zero
+=======
+>>>>>>> d367ba9c9cd37640d1689d05752be23e041da128
 	addi $a0,$a0,+1
 
 	jal moveDisc1 		# a0-> n , a1 -> origin, a2 -> destination
@@ -195,9 +258,13 @@ hanoi: # a0 -> n | a1 -> origin | a2 -> aux | a3 -> destination
 	add $a2,$t1,$zero
 
 	add $a3,$t2,$zero
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> 745bddbcaf5cb7d268268568ede62eedb4beaa7c
+>>>>>>> d367ba9c9cd37640d1689d05752be23e041da128
 	jal hanoi #a0 ->n | a1 -> aux | a2 -> origin | a3 -> destination
 
 	j pop
@@ -209,6 +276,7 @@ base:
 	add $a2,$a3,$zero
 
 	jal moveDisc1 	#a0 -> n, a1-> origin, a2-> destination
+<<<<<<< HEAD
 
 
 
@@ -239,6 +307,23 @@ moveDisc1:
 
 
 
+=======
+<<<<<<< HEAD
+
+pop:	#pop stack
+	lw $ra, 0($sp)
+	lw $a0, 4($sp)
+	lw $a1, 8($sp)
+	lw $a2, 12($sp)
+	lw $a3, 16($sp)
+	addi $sp, $sp, 20
+	jr $ra	
+	
+moveDisc1:
+	# We start by the saved count of discs, on each tower
+	# tower 1 : s3		tower 2 : s4 		tower 3 : s5
+=======
+>>>>>>> d367ba9c9cd37640d1689d05752be23e041da128
 	#pop stack
 
 pop:	
@@ -390,8 +475,12 @@ moveDisc1:
 	# tower 2 : s4 
 
 	# tower 3 : s5
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 745bddbcaf5cb7d268268568ede62eedb4beaa7c
+>>>>>>> d367ba9c9cd37640d1689d05752be23e041da128
 	
 
 	#inputs 
@@ -403,10 +492,16 @@ moveDisc1:
 	#a2 -> destination
 
 	
+<<<<<<< HEAD
 
 	#first check from wich tower we get the disc
 
 
+=======
+<<<<<<< HEAD
+	#first check from wich tower we get the disc
+=======
+>>>>>>> d367ba9c9cd37640d1689d05752be23e041da128
 	#first check from wich tower we get 
 
 	#the disc
@@ -432,8 +527,12 @@ moveDisc1:
 	la $s0 , tower1
 
 	#take the disc from origin
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 745bddbcaf5cb7d268268568ede62eedb4beaa7c
+>>>>>>> d367ba9c9cd37640d1689d05752be23e041da128
 	bne $a1,$t4,tower2	#if (origin == tower 1)
 
 	addi $s3,$s3,-1		#check this line
@@ -441,6 +540,7 @@ moveDisc1:
 	sll $s1,$s3,2		#s1 direction 
 
 	add $s1,$s0,$s1
+<<<<<<< HEAD
 
 	j exitcase
 
@@ -450,6 +550,13 @@ tower2: bne $a1,$t5,tower3	#else if (origin == tower 2)
 
 
 
+=======
+<<<<<<< HEAD
+	j exitcase
+	
+tower2: bne $a1,$t5,tower3	#else if (origin == tower 2)	
+=======
+>>>>>>> d367ba9c9cd37640d1689d05752be23e041da128
 	lw $s2, 0($s1)		#s2 we got the disc to move		<--- maybe we can erase these line.
 
 	sw $zero, 0($s1)	#erase the disc from origin
@@ -459,8 +566,12 @@ tower2: bne $a1,$t5,tower3	#else if (origin == tower 2)
 	
 
 tower2: bne $a1,$t5,tower3	#else if (origin == tower 2)
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 745bddbcaf5cb7d268268568ede62eedb4beaa7c
+>>>>>>> d367ba9c9cd37640d1689d05752be23e041da128
 	addi $s4,$s4,-1		#check this line
 
 	sll $s1,$s4,2		#s1 direction 
@@ -468,15 +579,24 @@ tower2: bne $a1,$t5,tower3	#else if (origin == tower 2)
 	add $s1,$s0,$s1
 
 	addi $s1,$s1,32
+<<<<<<< HEAD
 
 
 
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> d367ba9c9cd37640d1689d05752be23e041da128
 	lw $s2, 0($s1)		#s2 we got the disc to move		<--- maybe we can erase these line.
 
 	sw $zero, 0($s1)	#erase the disc from origin
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> 745bddbcaf5cb7d268268568ede62eedb4beaa7c
+>>>>>>> d367ba9c9cd37640d1689d05752be23e041da128
 	j exitcase
 
 
@@ -490,6 +610,7 @@ tower3: #we do not compare. 	#else -> origin == tower 3
 	add $s1,$s0,$s1
 
 	addi $s1,$s1,64
+<<<<<<< HEAD
 
 
 
@@ -511,6 +632,18 @@ exitcase:
 
 
 
+=======
+<<<<<<< HEAD
+	
+exitcase:
+	lw $s2, 0($s1)		#s2 we got the disc to move
+	sw $zero, 0($s1)	#erase the disc from origin
+	#now put the disc into destination
+	bne $a2,$t4,to2		#if (destination == tower 1)
+	sll $s1,$s3,2		#s1 direction we multiply discs by 4
+	add $s1,$s0,$s1	
+=======
+>>>>>>> d367ba9c9cd37640d1689d05752be23e041da128
 	lw $s2, 0($s1)		#s2 we got the disc to move		<--- maybe we can erase these line.
 
 	sw $zero, 0($s1)	#erase the disc from origin
@@ -530,8 +663,12 @@ exitcase:
 	add $s1,$s0,$s1
 
 	sw $s2, 0($s1)		#s2 move to the destionation tower	
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 745bddbcaf5cb7d268268568ede62eedb4beaa7c
+>>>>>>> d367ba9c9cd37640d1689d05752be23e041da128
 	addi $s3,$s3,1	
 
 	j exitmove
@@ -545,6 +682,7 @@ to2:	bne $a2,$t5,to3		#if (destination == tower 2)
 	add $s1,$s0,$s1
 
 	addi $s1,$s1,32
+<<<<<<< HEAD
 
 
 	addi $s4,$s4,1
@@ -577,6 +715,24 @@ exit:
 
 
 
+=======
+<<<<<<< HEAD
+	addi $s4,$s4,1
+	j exitmove
+
+to3:	#we do not compare	#else -> detination == tower 3
+	sll $s1,$s5,2		#s1 direction we multiply discs by 4
+	add $s1,$s0,$s1
+	addi $s1,$s1,64	
+	addi $s5,$s5,1
+	
+exitmove: 
+	sw $s2, 0($s1)		#s2 move to the destionation tower
+	jr $ra
+	
+exit:
+=======
+>>>>>>> d367ba9c9cd37640d1689d05752be23e041da128
 	sw $s2, 0($s1)		#s2 move to the destionation tower	
 
 	addi $s4,$s4,1
@@ -636,3 +792,4 @@ exit:
 
 	
 
+>>>>>>> 745bddbcaf5cb7d268268568ede62eedb4beaa7c
